@@ -1,0 +1,51 @@
+buildscript {
+	repositories {
+		mavenCentral()
+
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.8.RELEASE")
+	}
+}
+
+apply plugin: 'groovy'
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+apply plugin: 'war'
+
+war {
+	baseName = 'PCFDemo-sender'
+	version =  '0.1.0'
+}
+
+repositories {
+	mavenCentral()
+	maven { url "http://repo.spring.io/snapshot" }
+	maven { url "http://repo.springsource.org/milestone" }
+}
+
+
+dependencies {
+	compile("org.springframework.boot:spring-boot-starter-web") {
+		exclude module: "spring-boot-starter-tomcat"
+	}
+
+	// Added by Sandeep - Start
+	groovy group: 'org.codehaus.groovy', name: 'groovy', version: '2.3.6'
+  	groovy group: 'org.apache.ivy', name:'ivy', version:'2.2.0'
+	// Added by Sandeep - End
+
+	//compile 'org.codehaus.groovy:groovy-all:2.3.6'
+	//compile 'org.apache.ivy:ivy:2.2.0'
+	compile("org.springframework.cloud:cloudfoundry-connector:0.9.9.BUILD-SNAPSHOT")
+	compile("org.springframework.cloud:spring-service-connector:0.9.9.BUILD-SNAPSHOT")
+	compile("org.springframework.amqp:spring-rabbit:1.2.0.RELEASE")
+	compile("org.springframework:spring-webmvc:3.1.1.RELEASE")
+	compile("com.googlecode.json-simple:json-simple:1.1")
+}
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '1.11'
+}

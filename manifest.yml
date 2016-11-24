@@ -1,0 +1,23 @@
+---
+applications:
+- name: ElectionResult_demo
+  memory: 512M 
+  instances: 1
+  buildpack: java_buildpack
+  host: ElectionResult_demo
+  path: producer/src
+  timeout: 90
+  services:
+   - myrabbit
+  env:
+   JAVA_OPTS: -Djava.security.egd=file:///dev/urandom
+   
+- name: electiondashboard_demo
+  memory: 512M 
+  instances: 1
+  buildpack: java_buildpack
+  host: ElectionResult_demo
+  path: consumer/target/pcfdemo-map.war
+  timeout: 90
+  services:
+   - monitoring
